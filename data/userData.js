@@ -1,10 +1,8 @@
 /**
- * Genera datos dinámicos de usuario con email único por iteración.
- * Combina __VU + __ITER + timestamp para eliminar colisiones entre VUs concurrentes.
  *
- * @param {number} vu   - ID del usuario virtual (__VU)
- * @param {number} iter - Número de iteración (__ITER)
- * @returns {object} Datos completos del usuario
+ * @param {number} 
+ * @param {number} 
+ * @returns {object} 
  */
 export function generateUser(vu, iter) {
   const uid = `${vu}_${iter}_${Date.now()}`;
