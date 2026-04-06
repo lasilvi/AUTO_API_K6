@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check, sleep } from 'k6';
+import { check, sleep, group } from 'k6';
 import { Counter } from 'k6/metrics';
 import { BASE_URL, THRESHOLDS, LOAD_STAGES, HTTP_PARAMS } from '../utils/config.js';
 import { generateUser } from '../data/userData.js';
@@ -136,22 +136,30 @@ export default function () {
   const user = generateUser(__VU, __ITER);
   console.log(`[VU ${__VU} | iter ${__ITER}] email=${user.email}`);
 
+  let created = false;
 
-  const created = createUser(user);
-  sleep(1);
+  group('Create', function () {
+    created = createUser(user);
+    sleep(1);
+  });
 
   if (!created) {
     console.warn(`[VU ${__VU}] CREATE falló, saltando GET/UPDATE/DELETE`);
     return;
   }
 
-  getUser(user.email);
-  sleep(1);
+  group('Read', function () {
+    getUser(user.email);
+    sleep(1);
+  });
 
+  group('Update', function () {
+    updateUser(user);
+    sleep(1);
+  });
 
-  updateUser(user);
-  sleep(1);
-
-  deleteUser(user.email, user.password);
-  sleep(1);
+  group('Delete', function () {
+    deleteUser(user.email, user.password);
+    sleep(1);
+  });
 }
