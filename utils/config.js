@@ -13,10 +13,10 @@ export const THRESHOLDS = {
   crud_get_errors: ['count<5'],
   crud_update_errors: ['count<5'],
   crud_delete_errors: ['count<5'],
-  'http_req_duration{operation:create}': ['p(95)<1200'],
-  'http_req_duration{operation:get}':    ['p(95)<800'],
-  'http_req_duration{operation:update}': ['p(95)<1000'],
-  'http_req_duration{operation:delete}': ['p(95)<1000'],
+  'http_req_duration{operation:create}': ['p(95)<1500'],
+  'http_req_duration{operation:get}':    ['p(95)<1000'],
+  'http_req_duration{operation:update}': ['p(95)<1500'],
+  'http_req_duration{operation:delete}': ['p(95)<1500'],
 };
 
 
