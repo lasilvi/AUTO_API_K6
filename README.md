@@ -34,9 +34,22 @@ k6 run tests/crudUsuarios.js
 
 ## Configuración de escenario
 
-| Parámetro  | Valor |
-|------------|-------|
-| VUs        | 5     |
-| Duración   | 30s   |
-| Threshold  | p(95) < 1000ms |
+| Parámetro       | Valor                              |
+|-----------------|------------------------------------|
+| VUs máximos     | 10                                 |
+| Duración total  | 70s (ramp-up progresivo)           |
+| Stages          | 10s→5VU, 20s→10VU, 30s→10VU, 10s→0VU |
+
+### Thresholds
+
+| Métrica                              | Umbral       |
+|--------------------------------------|--------------|
+| `http_req_duration` p(95)            | < 1000 ms    |
+| `http_req_failed`                    | < 1%         |
+| `checks`                             | > 95%        |
+| `http_req_duration{operation:create}` p(95) | < 1500 ms |
+| `http_req_duration{operation:get}` p(95)    | < 1000 ms |
+| `http_req_duration{operation:update}` p(95) | < 1500 ms |
+| `http_req_duration{operation:delete}` p(95) | < 1500 ms |
+| Custom error counters (per operation) | < 5 each    |
 
